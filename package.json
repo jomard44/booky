@@ -15,9 +15,12 @@
   "type": "module",
   "main": "server.js",
   "scripts": {
-    "dev": "nodemon server.js"
+    "server": "nodemon server.js",
+    "client":"cd booky_ui && npm run dev",
+    "start": "concurrently \"npm run server\" \"npm run client\""
   },
   "dependencies": {
+    "concurrently": "^10.0.5",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
