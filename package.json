@@ -16,10 +16,11 @@
   "main": "server.js",
   "scripts": {
     "server": "nodemon server.js",
-    "client":"cd booky_ui && npm run dev",
+    "client": "cd booky_ui && npm run dev",
     "start": "concurrently \"npm run server\" \"npm run client\""
   },
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "concurrently": "^10.0.5",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",

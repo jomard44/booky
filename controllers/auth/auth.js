@@ -1,17 +1,28 @@
 import Auth from "../../model/Auth.js";
+import bcrypt from "bcrypt";
+
+const SALT_ROUNDS = 12;
 
 export const register = async (req, res) => {
   try {
     const { email, password } = req.body;
 
+    if (!email || !password) {
+      return res
+        .status(400)
+        .json({ message: "Email and password are required" });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
+
     const user = await Auth.create({
       email,
-      password,
+      password: hashedPassword,
     });
 
     res.status(201).json({
       message: "Registered successfully",
-      user,
+      user: { id: user.id, email: user.email },
     });
   } catch (error) {
     res.status(500).json({
@@ -26,7 +37,9 @@ export const login = async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-     return res.status(400).json({ message: "Email and password are required" });
+      return res
+        .status(400)
+        .json({ message: "Email and password are required" });
     }
 
     const user = await Auth.findOne({ email });
@@ -34,14 +47,19 @@ export const login = async (req, res) => {
     if (!user) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
-    if (user.password !== password) {
+
+    const passwordMatches = await bcrypt.compare(password, user.password);
+    if (!passwordMatches) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    return res.status(200).json({ message: "Welcome back", user });
+    return res.status(200).json({
+      message: "Welcome back",
+      user: { id: user.id, email: user.email },
+    });
   } catch (error) {
     res.status(500).json({
-      message: "Registration failed",
+      message: "Login failed",
       error: error.message,
     });
   }

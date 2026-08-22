@@ -15,7 +15,11 @@ function Login() {
         body: JSON.stringify(loginInfo),
       });
       const data = await response.json();
-      console.log("welcome", data)
+      if (response.ok) {
+        console.log("welcome", data);
+      }else{
+        console.error(data.message)
+      }
     } catch (error) {
       console.error("Something went wrong", error);
     }
@@ -62,7 +66,9 @@ function Login() {
         </form>
         <div>
           <p>already have an account?</p>
-          <Link className="text-blue-600" to="/register">Register now</Link>
+          <Link className="text-blue-600" to="/register">
+            Register now
+          </Link>
         </div>
       </div>
     </div>
