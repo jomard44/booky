@@ -8,6 +8,6 @@ import {
 const profileRouter = express.Router();
 profileRouter.get("/:id", getProfile);
 profileRouter.post("/create", createProfile);
-profileRouter.put("/update/:id", updateProfile);
+profileRouter.put("/:id", updateProfile);
 
 export default profileRouter;
