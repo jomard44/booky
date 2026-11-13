@@ -1,6 +1,7 @@
 import Login from "./auth/login";
 import Register from "./auth/register";
 import ProfileForm from "./profile/components/ProfileForm";
+import UpdateProfile from "./profile/components/UpdateProfile";
 import Profile from "./profile/Profile";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 function App() {
@@ -11,6 +12,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/profile/:id" element={<Profile />} />
         <Route path="/profile/create" element={<ProfileForm />} />
+        <Route path="/profile/:id/update" element={<UpdateProfile />} />
         
       </Routes>
     </BrowserRouter>
